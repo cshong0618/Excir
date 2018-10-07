@@ -25,7 +25,6 @@ it("should throw an error when the path is null/empty", () => {
 
 var path = `${__dirname}/controller`;
 
-
 it("walkDirectory should return an array", () => {
     assert.deepEqual(Array.isArray(walkDirectory(path)), true);
 });
@@ -33,9 +32,41 @@ it("walkDirectory should return an array", () => {
 it("walkDirectory should return the contents of the folder", () => {
     var files = [
         `${__dirname}/controller/getData.js`,
-        `${__dirname}/controller/inner/get.js`
+        `${__dirname}/controller/postData.js`,
+        `${__dirname}/controller/inner/get.js`,
     ];
-    
+
     var actualResult = walkDirectory(path);
     assert.deepEqual(actualResult, files);
+});
+
+it("should map routes in spec to express.Router", () => {
+    var spec = {
+        controllerPath: path,
+        path: {
+            "getData": {
+                "get": {
+                    "controller": "getData"
+                },
+                "post": {
+                    "controller": "postData"
+                }
+            },
+            "inner/get": {
+                "get": {
+                    "controller": "get"
+                }
+            }
+        }
+    };
+
+    var router = Excir(spec);
+    
+    var methodCount = Object.keys(spec.path)
+        .map(key => Object.keys(spec.path[key]).length)
+        .reduce((acc, cur) => acc + cur, 0);
+
+    var actualMethodCount = router.stack.map(x => x.route.path).length;
+
+    assert.deepEqual(actualMethodCount, methodCount);
 });
