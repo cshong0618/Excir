@@ -1,0 +1,22 @@
+{
+  "name": "excir",
+  "version": "0.0.0",
+  "description": "Simple Express router builder.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/test.js"
+  },
+  "keywords": [
+    "express",
+    "routing"
+  ],
+  "author": "shaong",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}
