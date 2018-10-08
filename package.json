@@ -12,6 +12,7 @@
   ],
   "author": "shaong",
   "license": "MIT",
+  "repository": "cshong0618/Excir",
   "dependencies": {
     "express": "^4.16.3",
     "lodash": "^4.17.11"
