@@ -1,6 +1,6 @@
 {
   "name": "excir",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Simple Express router builder.",
   "main": "index.js",
   "scripts": {
