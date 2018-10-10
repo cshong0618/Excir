@@ -61,12 +61,61 @@ it("should map routes in spec to express.Router", () => {
     };
 
     var router = Excir(spec);
-    
     var methodCount = Object.keys(spec.path)
         .map(key => Object.keys(spec.path[key]).length)
         .reduce((acc, cur) => acc + cur, 0);
 
     var actualMethodCount = router.stack.map(x => x.route.path).length;
+
+    assert.deepEqual(actualMethodCount, methodCount);
+});
+
+it("should return router function when using 'express' as backend", () => {
+    var spec = {
+        controllerPath: `${__dirname}/controller`,
+        path: {
+        }
+    };
+
+    var router = Excir(spec);
+    var routerType = 'function';
+    var actualRouterType = typeof router
+
+    assert.deepEqual(actualRouterType, routerType);
+});
+
+it("should return router object when using 'koa' as backend", () => {
+    var spec = {
+        controllerPath: `${__dirname}/koa-controller`,
+        path: {
+        }
+    };
+
+    var router = Excir(spec, {backend: "koa"});
+    var routerType = 'object';
+    var actualRouterType = typeof router
+
+    assert.deepEqual(actualRouterType, routerType);
+});
+
+it("should map routes in spec to koa.Router", () => {
+    var spec = {
+        controllerPath: `${__dirname}/koa-controller`,
+        path: {
+            "/": {
+                "get": {
+                    "controller": "getData"
+                }
+            }
+        }
+    };
+
+    var router = Excir(spec, {backend: "koa"});
+    var methodCount = Object.keys(spec.path)
+        .map(key => Object.keys(spec.path[key]).length)
+        .reduce((acc, cur) => acc + cur, 0);
+
+    var actualMethodCount = router.stack.map(x => x.path).length;
 
     assert.deepEqual(actualMethodCount, methodCount);
 });
