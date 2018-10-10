@@ -1,18 +1,9 @@
 # excir
-A simple Express router builder.
+A simple router builder for Express and Koa.
 
-## API spec
-```javascript
-{
-    controllerPath: string
-    path: {
-        "route": {
-            "method": {
-                "controller": string
-            }
-        }
-    }
-}
+## How to install?
+```bash
+npm i excir
 ```
 
 ## How it works
@@ -37,6 +28,34 @@ Excir goes through all defined routes and methods in the specification list and 
 
 You do not need to require `express` in every Controller file.
 
+## Functions
+### `Excir()`
+The heart of this library. Returns a `router` object/function depending on the backend selected.
+
+### `walkDirectory()`
+A synchronous function to walk through the directory and retrieve the js files. Exposed for testing purposes.
+
+## Options
+The `Excir()` function takes in a config object as its second argument.
+
+|Property|What it means?|Type|Default value|Valid values|
+|---|---|---|---|---|
+|`backend`|Which backend to use|`string`|`express`|`express`, `koa`|
+
+
+## API spec
+```javascript
+{
+    controllerPath: string
+    path: {
+        "route": {
+            "method": {
+                "controller": string
+            }
+        }
+    }
+}
+```
 
 ## How to use
 ```javascript
@@ -80,3 +99,14 @@ var router = Excir(spec);
 app.use("/", router);
 app.listen(8080);
 ```
+
+## Changelog
+### 0.0.2
+Added Koa routing support
+
+### 0.0.1
+Documentation 
+
+## Future Plans
+
+- [ ] Expose the Excir function only in `index.js`.
